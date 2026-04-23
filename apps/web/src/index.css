@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+:root {
+  --accent: #883dff;
+  --background: #fdfdfd;
+  --foreground: #1d1d1f;
+  --destructive: var(--color-rose-600);
+  --text: oklch(from var(--foreground) calc(l + 0.3) c h);
+  --muted: oklch(from var(--foreground) calc(l + 0.72) c h);
+
+  --font-geist: 'Geist Variable', system-ui, sans-serif;
+  --font-header: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-destructive: var(--destructive);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+
+  --font-sans: var(--font-geist);
+  --font-header: var(--font-header);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @apply max-w-7xl;
+}
+
+@layer base {
+  * {
+    @apply border-muted;
+  }
+
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+table {
+  @apply w-full table-auto caption-bottom text-sm;
+
+  & tr {
+    @apply border-b transition-colors;
+  }
+
+  & th {
+    @apply p-4 text-left align-middle font-medium whitespace-nowrap;
+  }
+
+  & td {
+    @apply max-w-56 truncate p-4 align-middle;
+  }
+
+  & th:first-child,
+  & td:first-child {
+    @apply pl-8;
+  }
+
+  & th:last-child,
+  & td:last-child {
+    @apply pr-8;
+  }
+
+  & thead {
+    @apply bg-muted text-foreground;
+
+    & tr {
+      @apply border-b;
+    }
+  }
+
+  & tbody {
+    & tr:last-child {
+      @apply border-0;
+    }
+  }
+
+  & tfoot {
+    @apply bg-text border-t font-medium;
+
+    & tr:last-child {
+      @apply border-b-0;
+    }
+  }
+}

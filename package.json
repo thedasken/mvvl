@@ -1,0 +1,17 @@
+{
+  "name": "i2s-demo",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter @app/api dev",
+    "dev:web": "pnpm --filter @app/web dev",
+    "dev": "pnpm --parallel --filter @app/* dev",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "lint:fix": "oxlint --fix",
+    "format:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.46.0",
+    "oxlint": "^1.61.0"
+  }
+}
