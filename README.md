@@ -30,21 +30,32 @@ The frontend is a `react` application powered by vite 8 for fast development and
 pnpm install
 ```
 
-2. Start the API server
+2. Copy environment variables from `.env.example` to `.env`
 
 ```bash
-pnpm dev:api
+cp ./apps/api/.env.example ./apps/api/.env
+cp ./apps/web/.env.example ./apps/web/.env
 ```
 
-The API server runs at `http://localhost:3000`.
-
-3. Start the Web Frontend
+3. Migrate the database
 
 ```bash
-pnpm dev:web
+pnpm db:migrate
 ```
 
-The frontend runs at `http://localhost:5173` and proxies API requests to the backend.
+4. (Optional) Seed the database with sample data
+
+```bash
+pnpm db:seed
+```
+
+5. Start the API server and Web frontend
+
+```bash
+pnpm dev
+```
+
+The API server runs at `http://localhost:3000` and the frontend runs at `http://localhost:5173`.
 
 ### API Scripts
 
@@ -55,6 +66,7 @@ The frontend runs at `http://localhost:5173` and proxies API requests to the bac
 | `pnpm db:migrate`  | Apply pending migrations to the database             |
 | `pnpm db:seed`     | Seed the database with initial test data             |
 | `pnpm db:studio`   | Launch Drizzle Studio for visual database inspection |
+| `pnpm type:check`  | Check TypeScript types                               |
 
 ### API Endpoints
 
@@ -103,6 +115,7 @@ pnpm --filter @app/api db:seed
 | `pnpm lint:fix`     | Fix lint errors using oxlint          |
 | `pnpm format`       | Format all packages using oxfmt       |
 | `pnpm format:check` | Check formatting using oxfmt          |
+| `pnpm type:check`   | Check TypeScript types                |
 
 ## Linting & Formatting
 
