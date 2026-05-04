@@ -11,5 +11,6 @@ export const personSchema = z.object({
 
 export const personUpdateSchema = personSchema.omit({ nik: true }).partial();
 
+export type Person = z.infer<typeof personSchema>;
 export type PersonInput = z.infer<typeof personSchema>;
 export type PersonUpdateInput = z.infer<typeof personUpdateSchema>;

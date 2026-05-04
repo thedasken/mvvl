@@ -8,7 +8,8 @@
     "lint": "oxlint",
     "format": "oxfmt",
     "lint:fix": "oxlint --fix",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "type:check": "pnpm --recursive type:check"
   },
   "devDependencies": {
     "oxfmt": "^0.46.0",

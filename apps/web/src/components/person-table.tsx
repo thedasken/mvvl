@@ -48,8 +48,8 @@ export const PersonTable: React.FC<Props> = ({ persons, onDeleteClick }) => {
               <td>{idx + 1}</td>
               <td>{emp.nik}</td>
               <td>{emp.nama_lengkap}</td>
-              <td>{calculateAge(emp.tanggal_lahir)}</td>
-              <td>{formatDate(emp.tanggal_lahir)}</td>
+              <td>{emp.tanggal_lahir && calculateAge(emp.tanggal_lahir)}</td>
+              <td>{emp.tanggal_lahir && formatDate(emp.tanggal_lahir)}</td>
               <td>{emp.jenis_kelamin}</td>
               <td>{emp.alamat}</td>
               <td>{emp.negara}</td>

@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Person } from '@/types/person';
+import type { Person } from '@/types/person';
 
 type Props = {
   person: Person;

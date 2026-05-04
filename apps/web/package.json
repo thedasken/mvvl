@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type:check": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@app/shared": "workspace:*",

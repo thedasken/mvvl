@@ -12,7 +12,7 @@ app.use(logger());
 app.use(
   '*',
   cors({
-    origin: process.env.ORIGIN_URL,
+    origin: process.env.ORIGIN_URL || 'http://localhost:5173',
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowHeaders: ['Content-Type'],
   }),

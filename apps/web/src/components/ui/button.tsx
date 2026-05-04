@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { cn } from '@/libs/utils';
-import { ButtonVariant } from '@/types/button';
+import type { ButtonVariant } from '@/types/button';
 
 interface Props extends React.ComponentProps<'button'> {
   children: React.ReactNode;
