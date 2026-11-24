@@ -14,10 +14,28 @@ const handleServiceError = (error: unknown, c: Context) => {
   return c.json({ error: 'Internal server error' }, 500);
 };
 
+const SORT_VALUES = ['nama'] as const;
+const ORDER_VALUES = ['asc', 'desc'] as const;
+
 personsRoute.get('/', async (c) => {
   const nik = c.req.query('nik');
   const nama = c.req.query('nama');
-  const data = await personService.findAll({ nik, nama });
+  const sort = c.req.query('sort');
+  const order = c.req.query('order');
+
+  if (sort !== undefined && !(SORT_VALUES as readonly string[]).includes(sort)) {
+    return c.json({ error: `Nilai sort tidak valid: "${sort}". Pilihan: nama` }, 400);
+  }
+  if (order !== undefined && !(ORDER_VALUES as readonly string[]).includes(order)) {
+    return c.json({ error: `Nilai order tidak valid: "${order}". Pilihan: asc, desc` }, 400);
+  }
+
+  const data = await personService.findAll({
+    nik,
+    nama,
+    sort: sort as 'nama' | undefined,
+    order: (order ?? 'asc') as 'asc' | 'desc',
+  });
   return c.json({ data });
 });
 
