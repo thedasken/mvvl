@@ -66,6 +66,7 @@ The API server runs at `http://localhost:3000` and the frontend runs at `http://
 | `pnpm db:migrate`  | Apply pending migrations to the database             |
 | `pnpm db:seed`     | Seed the database with initial test data             |
 | `pnpm db:studio`   | Launch Drizzle Studio for visual database inspection |
+| `pnpm test`        | Run tests with Vitest (in-memory database)           |
 | `pnpm type:check`  | Check TypeScript types                               |
 
 ### API Endpoints
