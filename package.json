@@ -5,6 +5,8 @@
     "dev:api": "pnpm --filter @app/api dev",
     "dev:web": "pnpm --filter @app/web dev",
     "dev": "pnpm --parallel --filter @app/* dev",
+    "db:migrate": "pnpm --filter @app/api db:migrate",
+    "db:seed": "pnpm --filter @app/api db:seed",
     "lint": "oxlint",
     "format": "oxfmt",
     "lint:fix": "oxlint --fix",
