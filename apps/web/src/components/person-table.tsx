@@ -1,18 +1,40 @@
-import { AlertTriangle, BookOpen, Pencil, Trash2 } from 'lucide-react';
+import {
+  AlertTriangle,
+  ArrowDown,
+  ArrowUp,
+  ArrowUpDown,
+  BookOpen,
+  Pencil,
+  Trash2,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import { calculateAge, formatDate } from '@/libs/utils';
 
-import type { Person } from '../types/person';
+import type { Person, PersonSortOrder } from '../types/person';
 import { IconButton } from './ui/icon-button';
 
 type Props = {
   persons: Person[];
+  sortOrder?: PersonSortOrder;
+  onNamaSortClick: () => void;
   onDeleteClick: (person: Person) => void;
 };
 
-export const PersonTable: React.FC<Props> = ({ persons, onDeleteClick }) => {
+const SORT_ICON = {
+  asc: ArrowUp,
+  desc: ArrowDown,
+} as const;
+
+export const PersonTable: React.FC<Props> = ({
+  persons,
+  sortOrder,
+  onNamaSortClick,
+  onDeleteClick,
+}) => {
   const navigate = useNavigate();
+  const SortIcon = sortOrder ? SORT_ICON[sortOrder] : ArrowUpDown;
+  const ariaSort = sortOrder === 'asc' ? 'ascending' : sortOrder === 'desc' ? 'descending' : 'none';
 
   return (
     <div className='overflow-hidden overflow-x-auto rounded-xl border'>
@@ -21,7 +43,12 @@ export const PersonTable: React.FC<Props> = ({ persons, onDeleteClick }) => {
           <tr>
             <th>No</th>
             <th>NIK</th>
-            <th>Nama Lengkap</th>
+            <th aria-sort={ariaSort}>
+              <button type='button' onClick={onNamaSortClick} className='flex items-center gap-1'>
+                <span>Nama Lengkap</span>
+                <SortIcon size={14} />
+              </button>
+            </th>
             <th>Umur</th>
             <th>Tanggal Lahir</th>
             <th>Jenis Kelamin</th>
