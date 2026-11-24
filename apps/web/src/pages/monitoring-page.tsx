@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useDeletePerson, usePersons } from '@/hooks/use-person';
-import type { Person } from '@/types/person';
+import type { Person, PersonSortOrder } from '@/types/person';
 
 interface SearchForm {
   nik?: string;
@@ -28,9 +28,18 @@ export function MonitoringPage() {
   const deleteMutation = useDeletePerson();
   const [search, setSearch] = React.useState<SearchForm>(INITIAL);
   const [selected, setSelected] = React.useState<Person | null>(null);
+  const [sortOrder, setSortOrder] = React.useState<PersonSortOrder | undefined>(undefined);
 
   const { register, handleSubmit, reset } = useForm<SearchForm>();
-  const { data, isLoading: loading, isError: error } = usePersons(search);
+  const {
+    data,
+    isLoading: loading,
+    isError: error,
+  } = usePersons({
+    ...search,
+    sort: sortOrder ? 'nama' : undefined,
+    order: sortOrder,
+  });
   const changed = search.nik || search.nama;
 
   const onSearchSubmit = (data: SearchForm) => {
@@ -43,6 +52,11 @@ export function MonitoringPage() {
   const handleReset = () => {
     reset();
     setSearch(INITIAL);
+  };
+
+  // Cycle : aucun → A→Z → Z→A → aucun. Le tri n'est pas réinitialisé par Reset.
+  const handleNamaSortClick = () => {
+    setSortOrder((prev) => (prev === undefined ? 'asc' : prev === 'asc' ? 'desc' : undefined));
   };
 
   const handleConfirmDelete = () => {
@@ -89,7 +103,14 @@ export function MonitoringPage() {
       {loading && <Loading />}
       {error && <Panic>Gagal memuat data.</Panic>}
 
-      {!loading && !error && <PersonTable persons={data ?? []} onDeleteClick={setSelected} />}
+      {!loading && !error && (
+        <PersonTable
+          persons={data ?? []}
+          sortOrder={sortOrder}
+          onNamaSortClick={handleNamaSortClick}
+          onDeleteClick={setSelected}
+        />
+      )}
       {selected && (
         <DeleteModal
           person={selected}

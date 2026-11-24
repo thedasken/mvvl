@@ -66,19 +66,20 @@ The API server runs at `http://localhost:3000` and the frontend runs at `http://
 | `pnpm db:migrate`  | Apply pending migrations to the database             |
 | `pnpm db:seed`     | Seed the database with initial test data             |
 | `pnpm db:studio`   | Launch Drizzle Studio for visual database inspection |
+| `pnpm test`        | Run tests with Vitest (in-memory database)           |
 | `pnpm type:check`  | Check TypeScript types                               |
 
 ### API Endpoints
 
 All endpoints are prefixed with `/api`.
 
-| Method | Path                | Description          | Query Params                      |
-| ------ | ------------------- | -------------------- | --------------------------------- |
-| GET    | `/api/persons`      | List persons         | `?nik=`, `?nama=` (partial match) |
-| GET    | `/api/persons/:nik` | Get person by NIK    |                                   |
-| POST   | `/api/persons`      | Create new person    |                                   |
-| PUT    | `/api/persons/:nik` | Update person by NIK |                                   |
-| DELETE | `/api/persons/:nik` | Delete person by NIK |                                   |
+| Method | Path                | Description          | Query Params                                                                         |
+| ------ | ------------------- | -------------------- | ------------------------------------------------------------------------------------ |
+| GET    | `/api/persons`      | List persons         | `?nik=`, `?nama=` (partial match), `?sort=nama`, `?order=asc\|desc` (asc par défaut) |
+| GET    | `/api/persons/:nik` | Get person by NIK    |                                                                                      |
+| POST   | `/api/persons`      | Create new person    |                                                                                      |
+| PUT    | `/api/persons/:nik` | Update person by NIK |                                                                                      |
+| DELETE | `/api/persons/:nik` | Delete person by NIK |                                                                                      |
 
 ### Database Configuration
 

@@ -1,7 +1,7 @@
 import { http } from '@/libs/http';
-import type { Person, PersonInput, PersonUpdateInput } from '@/types/person';
+import type { Person, PersonInput, PersonListParams, PersonUpdateInput } from '@/types/person';
 
-export const fetchPersons = async (params?: { nik?: string; nama?: string }): Promise<Person[]> => {
+export const fetchPersons = async (params?: PersonListParams): Promise<Person[]> => {
   const { data: res } = await http.get<{ data: Person[] }>('/persons', { params });
   return res.data;
 };

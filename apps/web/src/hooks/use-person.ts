@@ -1,12 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createPerson, deletePerson, fetchPerson, fetchPersons, updatePerson } from '@/api/persons';
-import type { PersonInput, PersonUpdateInput } from '@/types/person';
+import type { PersonInput, PersonListParams, PersonUpdateInput } from '@/types/person';
 
-export const usePersons = (params?: { nik?: string; nama?: string }) => {
+export const usePersons = (params?: PersonListParams) => {
   return useQuery({
     queryKey: ['persons', params],
     queryFn: () => fetchPersons(params),
+    // Garde le tableau affiché quand seul le tri change : sinon le clic sur l'en-tête
+    // démonte le bouton focalisé. Une recherche (nik/nama) garde le comportement de chargement.
+    placeholderData: (previousData, previousQuery) => {
+      const prev = previousQuery?.queryKey[1] as PersonListParams | undefined;
+      return prev?.nik === params?.nik && prev?.nama === params?.nama ? previousData : undefined;
+    },
   });
 };
 

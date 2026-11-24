@@ -7,18 +7,37 @@ import { ServiceError } from '@/libs/error';
 
 const { persons } = schema;
 
+// Collation indonésienne insensible à la casse et aux accents (« Éva » = « eva »).
+const namaCollator = new Intl.Collator('id', { sensitivity: 'base' });
+
 export class PersonService {
-  async findAll(filters: { nik?: string; nama?: string }): Promise<Person[]> {
+  async findAll(filters: {
+    nik?: string;
+    nama?: string;
+    sort?: 'nama';
+    order?: 'asc' | 'desc';
+  }): Promise<Person[]> {
     const conditions = [];
     if (filters.nik) conditions.push(like(persons.nik, `%${filters.nik}%`));
     if (filters.nama) conditions.push(like(persons.nama_lengkap, `%${filters.nama}%`));
-    if (conditions.length === 0) return await db.select().from(persons).all();
+    const rows =
+      conditions.length === 0
+        ? await db.select().from(persons).all()
+        : await db
+            .select()
+            .from(persons)
+            .where(and(...conditions))
+            .all();
 
-    return await db
-      .select()
-      .from(persons)
-      .where(and(...conditions))
-      .all();
+    if (filters.sort !== 'nama') return rows;
+
+    // Départage par NIK croissant, quel que soit le sens du tri principal.
+    const direction = filters.order === 'desc' ? -1 : 1;
+    return rows.sort((a, b) => {
+      const byName = namaCollator.compare(a.nama_lengkap, b.nama_lengkap);
+      if (byName !== 0) return direction * byName;
+      return a.nik < b.nik ? -1 : a.nik > b.nik ? 1 : 0;
+    });
   }
 
   async findByNik(nik: string): Promise<Person> {
